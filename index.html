@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>我的學習歷程素材庫｜學生學習單</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fa; --surface:#ffffff; --surface2:#e6ebf4; --ink:#1f2433; --muted:#535b70;
+  --navy:#1b2547; --navy-ink:#f4f6fa; --gold:#f0b429; --gold-ink:#1b2547; --teal:#23786a;
+  --line:#d3d9e6; --rule:#c9d3e6; --focus:#23786a;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141a2e; --surface:#1c243d; --surface2:#253052; --ink:#e7eaf3; --muted:#a8b0c6;
+    --navy:#0e1428; --navy-ink:#f4f6fa; --gold:#f0b429; --gold-ink:#1b2547; --teal:#5cc4b1;
+    --line:#33406a; --rule:#2d3a60; --focus:#5cc4b1; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141a2e; --surface:#1c243d; --surface2:#253052; --ink:#e7eaf3; --muted:#a8b0c6;
+  --navy:#0e1428; --navy-ink:#f4f6fa; --gold:#f0b429; --gold-ink:#1b2547; --teal:#5cc4b1;
+  --line:#33406a; --rule:#2d3a60; --focus:#5cc4b1; color-scheme:dark;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;font-size:17px;line-height:1.75}
+h1,h2,h3{font-family:"Noto Serif TC","PMingLiU",serif;color:var(--ink);line-height:1.35;margin:0}
+.hero{background:var(--navy);color:var(--navy-ink);padding:48px 20px 40px;border-left:10px solid var(--gold)}
+.hero-in{max-width:880px;margin:0 auto}
+.hero p{margin:8px 0 0;color:#c9d0e3}
+.hero h1{color:var(--navy-ink);font-size:clamp(30px,6vw,46px)}
+.hero .who{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:24px}
+.hero .who .wide{grid-column:1/-1}
+.hero label{font-size:14px;color:#c9d0e3}
+.hero input{width:100%;margin-top:4px;background:#253052;border:1px solid #4a5680;color:#f4f6fa;border-radius:10px;padding:10px 12px;font:inherit}
+.hero input::placeholder{color:#8f98b5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+nav.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.steps-in{max-width:880px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:10px 12px}
+.steps button{flex:0 0 auto;border:0;background:transparent;color:var(--muted);font:inherit;font-size:15px;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.steps button[aria-current="step"]{background:var(--navy);color:var(--navy-ink)}
+.steps button .dot{display:inline-block;width:8px;height:8px;border-radius:4px;background:var(--line);margin-right:6px;vertical-align:middle}
+.steps button.done .dot{background:var(--teal)}
+.progress{height:4px;background:var(--surface2)}
+.progress>div{height:100%;background:var(--gold);width:0;transition:width .3s}
+main{max-width:880px;margin:0 auto;padding:32px 20px 80px}
+.panel{display:none}
+.panel.on{display:block}
+.panel>h2{font-size:30px}
+.lede{color:var(--muted);margin:8px 0 24px}
+.block{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 22px 8px;margin-bottom:20px}
+.block h3{font-size:21px;margin-bottom:4px}
+.block .sub{color:var(--muted);font-size:15px;margin:0 0 14px}
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:700;font-size:16px;margin-bottom:6px}
+.field .hint{display:block;font-weight:400;color:var(--muted);font-size:14px}
+textarea,input[type=text]{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;line-height:1.7}
+textarea{min-height:84px;resize:vertical}
+textarea:focus,input:focus,button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.star{display:grid;grid-template-columns:44px 1fr;gap:4px 12px;align-items:start}
+.star .k{font-family:"Noto Serif TC",serif;font-weight:700;font-size:24px;color:var(--teal);text-align:center;padding-top:30px}
+.ikigai{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ikigai .field{background:var(--bg);border-radius:12px;padding:14px;border-top:6px solid var(--c);margin:0}
+.ikigai textarea{background:var(--surface)}
+.fill{font-size:17px;line-height:2.4}
+.fill input{width:auto;min-width:9em;display:inline-block;padding:4px 10px;background:var(--bg);border:0;border-bottom:2px solid var(--teal);border-radius:6px 6px 0 0}
+.checks label{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.checks label:last-child{border-bottom:0}
+.checks input{width:22px;height:22px;margin-top:3px;accent-color:var(--teal);flex:0 0 auto}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:24px;width:3px;background:var(--teal);border-radius:2px}
+.timeline .field{position:relative}
+.timeline .field::before{content:"";position:absolute;left:-28px;top:6px;width:19px;height:19px;border-radius:50%;background:var(--gold);border:3px solid var(--surface)}
+.tip{background:var(--surface2);border-left:6px solid var(--gold);border-radius:10px;padding:14px 18px;margin:0 0 20px;color:var(--ink)}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px}
+.btn{font:inherit;font-weight:700;border-radius:12px;padding:12px 22px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.btn.primary{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.btn.gold{background:var(--gold);color:var(--gold-ink);border-color:var(--gold)}
+.btn.ghost{background:transparent;color:var(--muted)}
+.saved{font-size:14px;color:var(--muted);text-align:right;margin:0 0 12px;min-height:1.5em}
+.toggle-ex{font:inherit;font-size:14px;color:var(--teal);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+.ex{display:none;font-size:15px;color:var(--muted);background:var(--bg);border-radius:10px;padding:12px 14px;margin:8px 0 0}
+.ex.on{display:block}
+/* letter */
+.letter{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:40px 36px;margin:20px 0;
+  background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 33px,var(--rule) 33px,var(--rule) 34px);background-position:0 30px;
+  box-shadow:8px 8px 0 var(--gold)}
+.letter h3{font-size:26px;margin-bottom:4px}
+.letter .meta{color:var(--muted);font-size:15px;margin-bottom:20px}
+.letter h4{font-family:"Noto Serif TC",serif;font-size:19px;color:var(--teal);margin:24px 0 4px}
+.letter p{margin:0;line-height:34px;white-space:pre-wrap}
+.letter .empty{color:var(--muted);font-style:italic}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.note{font-size:14px;color:var(--muted);margin-top:12px}
+.teacher-btn{display:none;margin-top:20px;background:var(--gold);color:var(--gold-ink);border:0}
+.teacher{display:none;max-width:1080px;margin:0 auto;padding:32px 20px 60px}
+.teacher.on{display:block}
+.teacher h2{font-size:28px}
+.tbl-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-top:16px}
+table.subs{width:100%;border-collapse:collapse;font-size:15px;min-width:780px}
+table.subs th,table.subs td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.subs th{background:var(--surface2);font-weight:700}
+table.subs td .btn{padding:6px 12px;font-size:14px}
+.bar{display:inline-block;width:80px;height:8px;background:var(--surface2);border-radius:4px;vertical-align:middle;margin-right:6px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--teal)}
+.submit-box{background:var(--surface);border:2px solid var(--teal);border-radius:16px;padding:18px 20px;margin:20px 0 0;display:none}
+.submit-box.on{display:block}
+.submit-box h3{font-size:20px}
+@media (max-width:640px){
+  .ikigai,.hero .who{grid-template-columns:1fr}
+  .letter{padding:28px 20px;box-shadow:5px 5px 0 var(--gold)}
+}
+@media print{
+  .hero,.teacher,.submit-box,nav.steps,.nav,.actions,.panel:not(#p6),#p6>:not(.letter){display:none!important}
+  #p6{display:block!important}
+  body{background:#fff}
+  .letter{box-shadow:none;border:0;background-image:none}
+}
+@media (prefers-reduced-motion:reduce){.progress>div{transition:none}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-in">
+    <h1>我的學習歷程素材庫</h1>
+    <p>寫給大學的自己。先用關鍵字或短句寫下想法，不需要一次寫成文章。內容會自動存在這台裝置的瀏覽器裡。</p>
+    <div class="who">
+      <div><label for="name">我的名字</label><input id="name" data-k="name" type="text" placeholder="例如：王小明"></div>
+      <div><label for="cls">班級</label><input id="cls" data-k="cls" type="text" inputmode="numeric" placeholder="例如：301"></div>
+      <div><label for="seat">座號</label><input id="seat" data-k="seat" type="text" inputmode="numeric" placeholder="例如：15"></div>
+      <div class="wide"><label for="dept">想申請的校系</label><input id="dept" data-k="dept" type="text" placeholder="例如：某某大學心理學系"></div>
+    </div>
+  </div>
+</header>
+<nav class="steps" aria-label="學習單步驟">
+  <div class="steps-in" id="stepbar"></div>
+  <div class="progress"><div id="prog"></div></div>
+</nav>
+<main>
+  <p class="saved" id="saved" aria-live="polite"></p>
+
+  <section class="panel" id="p1" data-title="Ikigai 回顧">
+    <h2>1　從 Ikigai 出發</h2>
+    <p class="lede">拿出上一堂課的筆記，把四個向度重新整理一次。這是自我探索的起點，不是科系配對測驗。</p>
+    <div class="ikigai">
+      <div class="field" style="--c:#f0b429"><label for="ik1">我喜歡什麼？<span class="hint">興趣、熱情、探索經驗</span></label><textarea id="ik1" data-k="ik1"></textarea></div>
+      <div class="field" style="--c:#23786a"><label for="ik2">我擅長什麼？<span class="hint">能力、優勢、具體表現</span></label><textarea id="ik2" data-k="ik2"></textarea></div>
+      <div class="field" style="--c:#4a6fd1"><label for="ik3">世界需要什麼？<span class="hint">關注的社會議題、想解決的問題</span></label><textarea id="ik3" data-k="ik3"></textarea></div>
+      <div class="field" style="--c:#d1654a"><label for="ik4">我能提供什麼價值？<span class="hint">未來想發揮的專長與貢獻</span></label><textarea id="ik4" data-k="ik4"></textarea></div>
+    </div>
+  </section>
+
+  <section class="panel" id="p2" data-title="高中三年">
+    <h2>2　高中三年，我的重要故事</h2>
+    <p class="lede">先從三個面向回想，再挑出一件最想寫的事，用 STAR + 反思寫得有深度。</p>
+    <p class="tip">不一定要是得獎、競賽或幹部經驗。一段打工、一場人際衝突、一次重新找到讀書方法，都可能是很好的素材。</p>
+    <div class="block">
+      <h3>三個面向，先寫關鍵字</h3>
+      <div class="field"><label for="a1">課業與學習探索<span class="hint">最有興趣的學科、印象深刻的學習、克服學習困難的方法</span></label><textarea id="a1" data-k="a1"></textarea></div>
+      <div class="field"><label for="a2">多元活動與生活經驗<span class="hint">社團、幹部、競賽、服務、自主學習、打工、家庭責任</span></label><textarea id="a2" data-k="a2"></textarea></div>
+      <div class="field"><label for="a3">自我認識與個人成長<span class="hint">個性優勢、面對過的挑戰、三年前和現在的我有何不同</span></label><textarea id="a3" data-k="a3"></textarea></div>
+    </div>
+    <div class="block">
+      <h3>挑一件事，用 STAR + 反思寫下來</h3>
+      <p class="sub">反思是自述和履歷最大的差別，千萬別省略。<button class="toggle-ex" type="button" data-ex="ex1">看班長的範例</button></p>
+      <p class="ex" id="ex1">高二擔任班長期間，我曾經遇到班級同學對活動分工意見不合的情況（S）。我需要讓活動順利完成（T）。起初我習慣直接安排工作，後來嘗試先聽取大家的想法，再依照每個人的興趣與能力分配任務（A）。同學的參與度明顯提高（R）。這次經驗讓我理解，領導並不是要求別人配合，而是學習傾聽、協調與承擔責任（反思）。</p>
+      <div class="field"><label for="st0">這件事的名稱</label><input type="text" id="st0" data-k="st0" placeholder="例如：高二擔任班長，處理分工衝突"></div>
+      <div class="star">
+        <span class="k" aria-hidden="true">S</span><div class="field"><label for="st1">情境：當時發生了什麼事？</label><textarea id="st1" data-k="st1"></textarea></div>
+        <span class="k" aria-hidden="true">T</span><div class="field"><label for="st2">任務：我面臨什麼挑戰或責任？</label><textarea id="st2" data-k="st2"></textarea></div>
+        <span class="k" aria-hidden="true">A</span><div class="field"><label for="st3">行動：我採取了哪些具體行動？</label><textarea id="st3" data-k="st3"></textarea></div>
+        <span class="k" aria-hidden="true">R</span><div class="field"><label for="st4">結果：最後產生了什麼結果？</label><textarea id="st4" data-k="st4"></textarea></div>
+        <span class="k" aria-hidden="true">R+</span><div class="field"><label for="st5">反思：這件事讓我學到什麼？對我有什麼影響？</label><textarea id="st5" data-k="st5"></textarea></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>把自傳排成四段</h3>
+      <div class="field"><label for="b1">認識自己<span class="hint">我的個性、興趣、價值觀與特質</span></label><textarea id="b1" data-k="b1"></textarea></div>
+      <div class="field"><label for="b2">探索自己<span class="hint">高中三年重要的學習及活動經驗</span></label><textarea id="b2" data-k="b2"></textarea></div>
+      <div class="field"><label for="b3">突破自己<span class="hint">遇到的困難、挑戰，以及如何成長</span></label><textarea id="b3" data-k="b3"></textarea></div>
+      <div class="field"><label for="b4">定位自己<span class="hint">這些經驗如何影響我的興趣與未來選擇</span></label><textarea id="b4" data-k="b4"></textarea></div>
+    </div>
+  </section>
+
+  <section class="panel" id="p3" data-title="申請動機">
+    <h2>3　申請動機：為什麼是這個科系？</h2>
+    <p class="lede">不只寫「我喜歡」，要讓教授看見興趣的起點、探索的過程，以及你和科系的連結。</p>
+    <div class="block">
+      <h3>查詢科系官網，勾選你已經了解的項目</h3>
+      <div class="checks">
+        <label><input type="checkbox" data-k="w1">科系的核心教育目標</label>
+        <label><input type="checkbox" data-k="w2">大一到大四主要課程</label>
+        <label><input type="checkbox" data-k="w3">特色課程或實習機會</label>
+        <label><input type="checkbox" data-k="w4">畢業後的發展方向</label>
+        <label><input type="checkbox" data-k="w5">自己最想學習的是哪一個部分</label>
+      </div>
+      <div class="field" style="margin-top:14px"><label for="wnote">官網上最吸引我的一點<span class="hint">課程名稱、實驗室、特色學程都可以</span></label><textarea id="wnote" data-k="wnote"></textarea></div>
+    </div>
+    <div class="block">
+      <h3>用三句話說明你的申請動機</h3>
+      <p class="sub">公式：我的興趣，我的探索，科系特色，我的期待。<button class="toggle-ex" type="button" data-ex="ex2">看心理學系的範例</button></p>
+      <p class="ex" id="ex2">高中期間，我對人際互動與情緒反應產生興趣，尤其在參與班級活動及觀察同儕互動時，開始思考人的行為背後是否有不同的心理因素。因此，我曾透過閱讀心理學相關書籍及自主學習，初步認識心理學的研究方法與理論。我進一步了解貴系的發展方向後，對認知心理學及社會心理學相關課程特別感興趣，希望能透過系統性的專業訓練，培養分析問題與理解人類行為的能力。</p>
+      <p class="fill">1. 我對 <input type="text" data-k="m1" aria-label="領域"> 領域產生興趣，是因為 <input type="text" data-k="m2" aria-label="興趣的原因" style="min-width:14em">。</p>
+      <p class="fill">2. 為了更了解這個領域，我曾經 <input type="text" data-k="m3" aria-label="做過的探索" style="min-width:16em">。</p>
+      <p class="fill">3. 我希望進入 <input type="text" data-k="m4" aria-label="科系"> 系，學習 <input type="text" data-k="m5" aria-label="想學的內容">，未來能夠 <input type="text" data-k="m6" aria-label="未來期待">。</p>
+    </div>
+  </section>
+
+  <section class="panel" id="p4" data-title="讀書計畫">
+    <h2>4　未來讀書計畫</h2>
+    <p class="lede">讀書計畫不是許願，而是有方向、有方法的學習規劃。你不需要確定未來三十年，但要知道進入大學後想往哪裡探索。</p>
+    <div class="block">
+      <h3>選 2 到 3 個最重要的方向</h3>
+      <div class="checks">
+        <label><input type="checkbox" data-k="d1">專業知識：想學會哪些核心知識？</label>
+        <label><input type="checkbox" data-k="d2">實務能力：想參與哪些實習或專題？</label>
+        <label><input type="checkbox" data-k="d3">跨領域學習：想結合哪些其他領域？</label>
+        <label><input type="checkbox" data-k="d4">國際視野：想培養語言或國際交流能力嗎？</label>
+        <label><input type="checkbox" data-k="d5">生涯發展：畢業後想往哪個方向探索？</label>
+      </div>
+    </div>
+    <div class="block">
+      <h3>我的大學時間軸</h3>
+      <p class="sub">每個階段至少寫一個具體行動。<button class="toggle-ex" type="button" data-ex="ex3">看具體的範例</button></p>
+      <p class="ex" id="ex3">大一階段，我希望先建立專業基礎，特別加強統計與研究方法相關能力。大二開始，期待能參與系上的專題研究，並透過跨領域選修課程，拓展對不同專業的理解。大三、大四則希望爭取實習機會，將課堂所學應用於實際情境，進一步確認自己未來的升學或就業方向。</p>
+      <div class="timeline">
+        <div class="field"><label for="t1">短期｜大一<span class="hint">適應大學生活、建立基礎知識、探索興趣</span></label><textarea id="t1" data-k="t1"></textarea></div>
+        <div class="field"><label for="t2">中期｜大二～大三<span class="hint">深入專業、累積實務經驗、發展專長</span></label><textarea id="t2" data-k="t2"></textarea></div>
+        <div class="field"><label for="t3">長期｜大四及畢業後<span class="hint">整合專業能力，思考升學或就業方向</span></label><textarea id="t3" data-k="t3"></textarea></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="p5" data-title="自我檢核">
+    <h2>5　自我檢核</h2>
+    <p class="lede">寫完初稿後，逐項確認。還沒做到的項目，回到前面的步驟補上。</p>
+    <div class="block">
+      <div class="checks">
+        <label><input type="checkbox" data-k="c1">我的自傳不是單純羅列經歷。</label>
+        <label><input type="checkbox" data-k="c2">我有具體的事件與行動。</label>
+        <label><input type="checkbox" data-k="c3">我有寫出自己的反思與成長。</label>
+        <label><input type="checkbox" data-k="c4">我的申請動機有具體的探索經驗。</label>
+        <label><input type="checkbox" data-k="c5">我對申請科系有一定程度的了解。</label>
+        <label><input type="checkbox" data-k="c6">我的讀書計畫有時間順序及具體目標。</label>
+        <label><input type="checkbox" data-k="c7">三個部分之間有一致的主軸。</label>
+        <label><input type="checkbox" data-k="c8">內容真實，沒有誇大或套用不符合自己的經驗。</label>
+      </div>
+    </div>
+    <p class="tip">各校系的審查項目與格式可能不同，請以當年度招生簡章、校系分則及指定格式為準，不要所有科系都用同一份自述。</p>
+  </section>
+
+  <section class="panel" id="p6" data-title="我的初稿">
+    <h2>6　我的初稿架構</h2>
+    <p class="lede">這是把你所有素材排在一起的樣子。複製下來，貼到自己的文件裡繼續改寫成文章。</p>
+    <div class="actions">
+      <button class="btn gold" type="button" id="docx">下載 Word 檔</button>
+      <button class="btn" type="button" id="copy">複製全部內容</button>
+      <button class="btn" type="button" id="print">列印或存成 PDF</button>
+      <button class="btn ghost" type="button" id="reset">清除所有內容</button>
+    </div>
+    <p class="note" id="copymsg" aria-live="polite">填寫內容會先存在這台裝置的瀏覽器。換電腦或清除瀏覽紀錄就會消失，記得下載 Word 檔或繳交給老師。</p>
+    <div class="submit-box" id="submitbox">
+      <h3>繳交給老師</h3>
+      <p class="note" id="submitmsg" aria-live="polite">完成後按下繳交，老師就能看到你的學習單。之後修改可以再按一次，會更新成最新版本。</p>
+      <button class="btn primary" type="button" id="submit">繳交給老師</button>
+    </div>
+    <article class="letter" id="letter"></article>
+  </section>
+
+  <div class="nav">
+    <button class="btn" type="button" id="prev">上一步</button>
+    <button class="btn primary" type="button" id="next">下一步</button>
+  </div>
+</main>
+
+<script>
+/* ===== 老師設定區 =====
+   把 Google Apps Script 部署後得到的網址貼在引號裡（以 https://script.google.com/macros/s/ 開頭）。
+   留空的話，學生頁面不會出現「繳交給老師」，只能下載 Word 檔。 */
+var SUBMIT_URL = "";
+/* ===================== */
+(function(){
+  var KEY="lp-worksheet-v1";
+  var data={};
+  try{ var raw=localStorage.getItem(KEY); if(raw) data=JSON.parse(raw)||{}; }catch(e){ data={}; }
+  var els=document.querySelectorAll("[data-k]");
+  var savedEl=document.getElementById("saved");
+  var timer=null;
+  function save(){
+    try{ localStorage.setItem(KEY,JSON.stringify(data)); savedEl.textContent="已自動儲存在這台裝置"; }
+    catch(e){ savedEl.textContent="這個瀏覽器無法自動儲存，完成後請記得下載 Word 檔。"; }
+  }
+  function fillInputs(){
+    els.forEach(function(el){ var k=el.dataset.k; if(el.type==="checkbox") el.checked=!!data[k]; else el.value=data[k]!=null?data[k]:""; });
+  }
+  fillInputs();
+  els.forEach(function(el){
+    var k=el.dataset.k;
+    if(el.type==="checkbox"){ el.addEventListener("change",function(){data[k]=el.checked;save();updateDone();}); }
+    else{ el.addEventListener("input",function(){data[k]=el.value; clearTimeout(timer); savedEl.textContent="儲存中…"; timer=setTimeout(function(){save();updateDone();},400);}); }
+  });
+  document.querySelectorAll(".toggle-ex").forEach(function(b){
+    b.setAttribute("aria-expanded","false");
+    b.addEventListener("click",function(){ var ex=document.getElementById(b.dataset.ex); var on=ex.classList.toggle("on"); b.setAttribute("aria-expanded",on?"true":"false"); });
+  });
+
+  /* ---------- steps ---------- */
+  var panels=[].slice.call(document.querySelectorAll(".panel"));
+  var bar=document.getElementById("stepbar");
+  var cur=0;
+  panels.forEach(function(p,i){
+    var b=document.createElement("button"); b.type="button";
+    b.innerHTML='<span class="dot"></span>'+(i+1)+'　'+p.dataset.title;
+    b.addEventListener("click",function(){go(i,true);});
+    bar.appendChild(b);
+  });
+  var btns=bar.querySelectorAll("button");
+  var prev=document.getElementById("prev"), next=document.getElementById("next");
+  function go(i,scroll){
+    cur=Math.max(0,Math.min(panels.length-1,i));
+    panels.forEach(function(p,j){p.classList.toggle("on",j===cur);});
+    btns.forEach(function(b,j){ if(j===cur) b.setAttribute("aria-current","step"); else b.removeAttribute("aria-current"); });
+    prev.style.visibility=cur===0?"hidden":"visible";
+    next.style.visibility=cur===panels.length-1?"hidden":"visible";
+    next.textContent=cur===panels.length-2?"看我的初稿":"下一步";
+    if(cur===panels.length-1) render();
+    try{ history.replaceState(null,"","#step-"+(cur+1)); }catch(e){}
+    if(scroll) window.scrollTo({top:document.querySelector("nav.steps").offsetTop,behavior:"auto"});
+  }
+  prev.addEventListener("click",function(){go(cur-1,true);});
+  next.addEventListener("click",function(){go(cur+1,true);});
+
+  function ratio(d,scope){
+    var fs=scope.querySelectorAll("[data-k]"); var n=0;
+    fs.forEach(function(el){ var x=d[el.dataset.k]; if(x && (x===true || String(x).trim())) n++; });
+    return fs.length? n/fs.length : 0;
+  }
+  function totalRatio(d){
+    var t=0; panels.forEach(function(p){ if(p.id!=="p6") t+=ratio(d,p); }); return t/(panels.length-1);
+  }
+  function updateDone(){
+    panels.forEach(function(p,i){ btns[i].classList.toggle("done",p.id!=="p6" && ratio(data,p)>=0.5); });
+    document.getElementById("prog").style.width=Math.round(totalRatio(data)*100)+"%";
+  }
+
+  /* ---------- content model ---------- */
+  function gv(d,k){ return (d[k]||"").toString().trim(); }
+  function blank(s,label){ return s? s : "（"+label+"）"; }
+  function sections(d){
+    var v=function(k){return gv(d,k);};
+    var star=[["S 情境","st1"],["T 任務","st2"],["A 行動","st3"],["R 結果","st4"],["反思","st5"]].filter(function(x){return v(x[1]);}).map(function(x){return x[0]+"："+v(x[1]);}).join("\n");
+    var dirs=[["d1","專業知識"],["d2","實務能力"],["d3","跨領域學習"],["d4","國際視野"],["d5","生涯發展"]].filter(function(x){return d[x[0]];}).map(function(x){return x[1];}).join("、");
+    var mot=[];
+    if(v("m1")||v("m2")) mot.push("我對"+blank(v("m1"),"領域")+"領域產生興趣，是因為"+blank(v("m2"),"原因")+"。");
+    if(v("m3")) mot.push("為了更了解這個領域，我曾經"+v("m3")+"。");
+    if(v("m4")||v("m5")||v("m6")) mot.push("我希望進入"+blank(v("m4"),"科系")+"系，學習"+blank(v("m5"),"內容")+"，未來能夠"+blank(v("m6"),"期待")+"。");
+    var ik=[["我喜歡","ik1"],["我擅長","ik2"],["世界需要","ik3"],["我能提供","ik4"]].filter(function(x){return v(x[1]);}).map(function(x){return x[0]+"："+v(x[1]);}).join("\n");
+    return [
+      ["Ikigai 自我探索",ik],
+      ["高中三年自傳｜認識自己",v("b1")],
+      ["高中三年自傳｜探索自己",v("b2")],
+      ["高中三年自傳｜突破自己",v("b3")],
+      ["高中三年自傳｜定位自己",v("b4")],
+      ["重要故事"+(v("st0")?"："+v("st0"):""),star],
+      ["申請動機",mot.join("")+(v("wnote")?"\n科系最吸引我的地方："+v("wnote"):"")],
+      ["讀書計畫的重點方向",dirs],
+      ["大一",v("t1")],
+      ["大二～大三",v("t2")],
+      ["大四及畢業後",v("t3")]
+    ];
+  }
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+  function letterHTML(d){
+    var h='<h3>寫給大學的自己</h3><p class="meta">'+esc(gv(d,"cls")||"班級")+" 班　"+esc(gv(d,"seat")||"座號")+" 號　"+esc(gv(d,"name")||"我的名字")+"　申請："+esc(gv(d,"dept")||"想申請的校系")+"</p>";
+    sections(d).forEach(function(s){
+      h+="<h4>"+esc(s[0])+"</h4>"+(s[1]?"<p>"+esc(s[1])+"</p>":'<p class="empty">還沒有寫，回到前面的步驟補上。</p>');
+    });
+    return h;
+  }
+  function render(){ document.getElementById("letter").innerHTML=letterHTML(data); }
+  function plain(d){
+    var t="寫給大學的自己\n"+gv(d,"cls")+" 班　"+gv(d,"seat")+" 號　"+gv(d,"name")+"　申請："+gv(d,"dept")+"\n";
+    sections(d).forEach(function(s){ t+="\n【"+s[0]+"】\n"+(s[1]||"（尚未填寫）")+"\n"; });
+    return t;
+  }
+
+  /* ---------- Word (.docx) ---------- */
+  function x(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function para(text,style){
+    return '<w:p>'+(style?'<w:pPr><w:pStyle w:val="'+style+'"/></w:pPr>':'')+'<w:r><w:t xml:space="preserve">'+x(text)+'</w:t></w:r></w:p>';
+  }
+  function buildDocx(d){
+    if(typeof JSZip==="undefined") return Promise.reject(new Error("nozip"));
+    var body=para("寫給大學的自己","Title");
+    body+=para("班級："+(gv(d,"cls")||"＿＿＿")+"　　座號："+(gv(d,"seat")||"＿＿")+"　　姓名："+(gv(d,"name")||"＿＿＿＿")+"　　想申請的校系："+(gv(d,"dept")||"＿＿＿＿"),"Meta");
+    body+=para("以下是學習歷程素材庫的內容。請在每一段下方，把關鍵字改寫成完整的段落。","Note");
+    sections(d).forEach(function(s){
+      body+=para(s[0],"Heading1");
+      var lines=(s[1]||"（尚未填寫）").split(/\n/);
+      lines.forEach(function(l){ body+=para(l,null); });
+      body+=para("",null);
+    });
+    body+=para("自我檢核","Heading1");
+    ["我的自傳不是單純羅列經歷。","我有具體的事件與行動。","我有寫出自己的反思與成長。","我的申請動機有具體的探索經驗。","我對申請科系有一定程度的了解。","我的讀書計畫有時間順序及具體目標。","三個部分之間有一致的主軸。","內容真實，沒有誇大或套用不符合自己的經驗。"].forEach(function(c,i){
+      body+=para((d["c"+(i+1)]?"☑ ":"☐ ")+c,null);
+    });
+    var doc='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+body+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/></w:sectPr></w:body></w:document>';
+    var font='<w:rFonts w:ascii="Microsoft JhengHei" w:hAnsi="Microsoft JhengHei" w:eastAsia="微軟正黑體" w:cs="Microsoft JhengHei"/>';
+    var styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">'+
+      '<w:docDefaults><w:rPrDefault><w:rPr>'+font+'<w:sz w:val="24"/><w:lang w:val="en-US" w:eastAsia="zh-TW"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="120" w:line="360" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'+
+      '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style>'+
+      '<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:spacing w:after="200"/></w:pPr><w:rPr><w:b/><w:color w:val="1B2547"/><w:sz w:val="44"/></w:rPr></w:style>'+
+      '<w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:qFormat/><w:pPr><w:keepNext/><w:spacing w:before="240" w:after="80"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:b/><w:color w:val="23786A"/><w:sz w:val="30"/></w:rPr></w:style>'+
+      '<w:style w:type="paragraph" w:styleId="Meta"><w:name w:val="Meta"/><w:basedOn w:val="Normal"/><w:rPr><w:color w:val="535B70"/></w:rPr></w:style>'+
+      '<w:style w:type="paragraph" w:styleId="Note"><w:name w:val="Note"/><w:basedOn w:val="Normal"/><w:rPr><w:i/><w:color w:val="535B70"/><w:sz w:val="21"/></w:rPr></w:style>'+
+      '</w:styles>';
+    var zip=new JSZip();
+    zip.file("[Content_Types].xml",'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>');
+    zip.file("_rels/.rels",'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
+    zip.file("word/_rels/document.xml.rels",'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>');
+    zip.file("word/document.xml",doc);
+    zip.file("word/styles.xml",styles);
+    return zip.generateAsync({type:"blob",mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+  }
+  function fname(d){ var n=(gv(d,"name")||"學生").replace(/[\\\/:*?"<>|]/g,""); var cs=(gv(d,"cls")+(gv(d,"seat")?"-"+gv(d,"seat"):"")).replace(/[^0-9A-Za-z\u4e00-\u9fff-]/g,""); return "學習歷程自述素材_"+(cs?cs+"_":"")+n+".docx"; }
+
+  var msg=document.getElementById("copymsg");
+  function saveFile(name,blob,okText,el){
+    el=el||msg;
+    try{
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); },4000);
+      el.textContent=okText;
+    }catch(e){ el.textContent="下載失敗，請先用「複製全部內容」保存。"; }
+  }
+  document.getElementById("docx").addEventListener("click",function(){
+    buildDocx(data).then(function(blob){ saveFile(fname(data),blob,"Word 檔已下載，可以直接打開編輯。"); },function(){ msg.textContent="Word 產生工具沒有載入，請重新整理頁面後再試。"; });
+  });
+  document.getElementById("copy").addEventListener("click",function(){
+    var t=plain(data);
+    function fallback(){
+      var ta=document.createElement("textarea"); ta.value=t; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select();
+      var ok=false; try{ ok=document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+      msg.textContent= ok? "已複製。貼到 Word 或 Google 文件裡繼續寫。" : "無法自動複製，請直接選取下方內容複製。";
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){ msg.textContent="已複製。貼到 Word 或 Google 文件裡繼續寫。"; },fallback); }
+    else fallback();
+  });
+  document.getElementById("print").addEventListener("click",function(){ render(); window.print(); });
+  document.getElementById("reset").addEventListener("click",function(){
+    if(!confirm("確定要清除這台裝置上填寫的內容嗎？已繳交給老師的版本不會被刪除。")) return;
+    data={}; try{ localStorage.removeItem(KEY); }catch(e){}
+    fillInputs(); updateDone(); render(); savedEl.textContent="已清除";
+  });
+
+  /* ---------- submit to teacher (Google Apps Script) ---------- */
+  var smsg=document.getElementById("submitmsg");
+  var sbtn=document.getElementById("submit");
+  function fmt(t){ var d=new Date(t); return (d.getMonth()+1)+"/"+d.getDate()+" "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+  if(SUBMIT_URL){ document.getElementById("submitbox").classList.add("on"); }
+  try{ var last=localStorage.getItem(KEY+"-submitted"); if(last){ smsg.textContent="你上次繳交的時間是 "+fmt(Number(last))+"。修改後可以再按一次更新。"; sbtn.textContent="更新繳交內容"; } }catch(e){}
+  sbtn.addEventListener("click",function(){
+    var miss=[["name","名字"],["cls","班級"],["seat","座號"]].filter(function(q){return !gv(data,q[0]);});
+    if(miss.length){ smsg.textContent="請先在最上方填寫你的"+miss.map(function(q){return q[1];}).join("、")+"，再按繳交。"; document.getElementById(miss[0][0]).focus(); window.scrollTo({top:0,behavior:"auto"}); return; }
+    var now=Date.now();
+    var body={name:gv(data,"name"),cls:gv(data,"cls"),seat:gv(data,"seat"),dept:gv(data,"dept"),progress:Math.round(totalRatio(data)*100),
+      sections:sections(data).map(function(x){return [x[0],x[1]||""];}),fields:data,submittedAt:now};
+    sbtn.disabled=true; smsg.textContent="繳交中…";
+    fetch(SUBMIT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)})
+      .then(function(){
+        smsg.textContent="已繳交（"+fmt(now)+"）。之後修改可以再按一次，老師會看到最新版本。";
+        sbtn.textContent="更新繳交內容";
+        try{ localStorage.setItem(KEY+"-submitted",String(now)); }catch(e){}
+      },function(){ smsg.textContent="繳交失敗，請確認網路連線後再試，或改用「下載 Word 檔」交給老師。"; })
+      .then(function(){ sbtn.disabled=false; });
+  });
+
+  var m=/^#step-(\d)$/.exec(location.hash);
+  go(m? parseInt(m[1],10)-1 : 0,false);
+  window.addEventListener("hashchange",function(){ var mm=/^#step-(\d)$/.exec(location.hash); if(mm && parseInt(mm[1],10)-1!==cur) go(parseInt(mm[1],10)-1,false); });
+  updateDone();
+})();
+</script>
+
+</body>
+</html>
